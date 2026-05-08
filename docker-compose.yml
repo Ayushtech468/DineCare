@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16
+    container_name: dinecare-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: dinecare_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web:
+    build: .
+    container_name: dinecare-backend
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
