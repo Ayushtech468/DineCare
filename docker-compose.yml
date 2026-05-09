@@ -16,13 +16,13 @@ services:
     build: .
     container_name: dinecare-backend
     volumes:
-      - ./backend:/app
-    working_dir: /app
-    command: python manage.py runserver 0.0.0.0:8000
+      - ./backend:/app/backend
+    working_dir: /app/backend
     ports:
       - "8000:8000"
     depends_on:
       - db
+    entrypoint: ["sh", "scripts/entrypoint.sh"]
 
 volumes:
   pgdata:

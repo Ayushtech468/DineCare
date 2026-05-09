@@ -2,12 +2,22 @@ FROM python:3.12
 
 WORKDIR /app
 
-COPY requirements.txt .
+# Copy only requirements first (from backend)
+COPY backend/requirements.txt /app/backend/requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r /app/backend/requirements.txt
 
-COPY . .
+# Copy backend code
+COPY backend/ /app/backend/
+
+# Set working directory inside backend
+WORKDIR /app/backend
+
+# Make entrypoint executable
+RUN chmod +x scripts/entrypoint.sh
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run entrypoint
+ENTRYPOINT ["sh", "scripts/entrypoint.sh"]
