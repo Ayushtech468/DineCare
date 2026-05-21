@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'apps.user',
+    'apps.util',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +81,7 @@ DATABASES = {
         'NAME': 'dinecare_db',
         'USER': 'admin',
         'PASSWORD': 'admin123',
-        'HOST': 'db',   # 👈 IMPORTANT (not localhost)
+        'HOST': 'dinecare-postgres',   # 👈 IMPORTANT (not localhost)
         'PORT': '5432',
     }
 }
@@ -119,3 +121,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+AUTH_USER_MODEL = 'user.User'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = "mailhog"
+EMAIL_PORT = 1025
+
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
+
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
