@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,10 +38,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 
     'apps.user',
     'apps.util',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT ={
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIEFETIME': timedelta(minutes=30),
+    "USER_ID_FIELD": "uid",
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,10 +92,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dinecare_db',
-        'USER': 'admin',
-        'PASSWORD': 'admin123',
-        'HOST': 'dinecare-postgres',   # 👈 IMPORTANT (not localhost)
+        'NAME': 'dinecare',
+        'USER': 'dinecare_user',
+        'PASSWORD': 'dinecare@123',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -124,10 +138,8 @@ STATIC_URL = 'static/'
 
 AUTH_USER_MODEL = 'user.User'
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-EMAIL_HOST = "mailhog"
-EMAIL_PORT = 1025
 
 EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
