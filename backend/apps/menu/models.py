@@ -19,8 +19,6 @@ class Category(AbstractBaseModel):
         verbose_name_plural = "Categories"
 
 
-
-
 class MenuItem(AbstractBaseModel):
 
     category = models.ForeignKey(
