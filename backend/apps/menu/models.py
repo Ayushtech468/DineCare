@@ -49,3 +49,6 @@ class MenuItem(AbstractBaseModel):
     is_vegetarian = models.BooleanField(default=False)
 
     preparation_time = models.PositiveIntegerField(default=15)
+
+    def __str__(self):
+        return f"{self.name}--{self.category}"
